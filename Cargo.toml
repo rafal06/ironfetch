@@ -1,0 +1,10 @@
+[package]
+name = "ironfetch"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+sysinfo = "0.26.5"
+whoami = "1.2.3"
