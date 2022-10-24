@@ -17,7 +17,12 @@ fn main() {
     }
 
     // Get system info
-    let os_name = format!("{} {}", sys.name().unwrap(), sys.os_version().unwrap());
+    let os_name = sys.name().unwrap();
+    let os_name = match os_name.as_str() {
+        "Darwin" => "MacOS",
+        other => other,
+    };
+    let os_name_version = format!("{} {}", os_name, sys.os_version().unwrap());
     let kernel = sys.kernel_version().unwrap();
     let desktop = whoami::desktop_env().to_string();
 
@@ -25,7 +30,7 @@ fn main() {
     let printinfo = vec![
         user_at_hostname,
         separator,
-        os_name,
+        os_name_version,
         kernel,
         desktop,
     ];
