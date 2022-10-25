@@ -48,7 +48,7 @@ fn main() {
     }
 
     // Print the rest of the ASCII
-    for line in (&printinfo).len()..ascii_arr.len() {
+    for line in (&printinfo).len()..ascii_arr.len() - 1 {
         println!("{}", ascii_arr[line]);
     }
 }
