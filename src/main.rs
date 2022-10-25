@@ -1,4 +1,4 @@
-use sysinfo::{System, SystemExt};
+use sysinfo::{CpuExt, System, SystemExt};
 
 const ASCII_ART: &str = include_str!("../ascii_distros/fedora.txt");
 
@@ -26,6 +26,9 @@ fn main() {
     let kernel = sys.kernel_version().unwrap();
     let desktop = whoami::desktop_env().to_string();
 
+    // Get hardware info
+    let cpu = sys.cpus()[0].brand().to_string();
+
     // Collect everything to a vector
     let printinfo = vec![
         user_at_hostname,
@@ -33,6 +36,7 @@ fn main() {
         os_name_version,
         kernel,
         desktop,
+        cpu,
     ];
 
     // Print everything
