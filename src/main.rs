@@ -25,7 +25,7 @@ fn main() {
     };
     let os_name_version = format!("{} {}", os_name, sys.os_version().unwrap());
     let kernel = sys.kernel_version().unwrap();
-    let desktop = match dbg!(env::var("XDG_CURRENT_DESKTOP")) {
+    let desktop = match env::var("XDG_CURRENT_DESKTOP") {
         Ok(val) => val,
         Err(_) => whoami::desktop_env().to_string(),
     };
