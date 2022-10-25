@@ -1,3 +1,4 @@
+use std::env;
 use sysinfo::{CpuExt, System, SystemExt};
 
 const ASCII_ART: &str = include_str!("../ascii_distros/fedora.txt");
@@ -24,7 +25,10 @@ fn main() {
     };
     let os_name_version = format!("{} {}", os_name, sys.os_version().unwrap());
     let kernel = sys.kernel_version().unwrap();
-    let desktop = whoami::desktop_env().to_string();
+    let desktop = match dbg!(env::var("XDG_CURRENT_DESKTOP")) {
+        Ok(val) => val,
+        Err(_) => whoami::desktop_env().to_string(),
+    };
 
     // Get hardware info
     let cpu = sys.cpus()[0].brand().to_string();
