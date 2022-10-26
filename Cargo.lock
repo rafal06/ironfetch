@@ -97,11 +97,8 @@ dependencies = [
 name = "ironfetch"
 version = "0.1.0"
 dependencies = [
-<<<<<<< HEAD
  "phf",
-=======
  "regex",
->>>>>>> bc86ff9 (Display DE version)
  "sysinfo",
  "whoami",
 ]
