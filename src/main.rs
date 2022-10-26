@@ -2,7 +2,9 @@ mod ascii_distros;
 use ascii_distros::ASCII_DISTROS;
 
 use std::env;
+use std::process::Command;
 use sysinfo::{CpuExt, System, SystemExt};
+use regex::Regex;
 
 fn main() {
     let sys = System::new_all();
@@ -31,6 +33,31 @@ fn main() {
         Err(_) => whoami::desktop_env().to_string(),
     };
 
+    // Get desktop version
+    let desktop_version_cmd = match desktop.as_str() {
+        "GNOME" => Some("gnome-shell"),
+        "KDE" => Some("plasmashell"),
+        "XFCE" => Some("xfce4-session"),
+        _ => None,
+    };
+
+    let mut desktop_version = String::new();
+    if let Some(cmd) = desktop_version_cmd {
+        let desktop_version_raw = String::from_utf8(
+            Command::new(cmd)
+                .arg("--version")
+                .output()
+                .expect("Couldn't process desktop version")
+                .stdout
+        ).expect("Couldn't process desktop version");
+
+        let de_ver_regex = Regex::new(r"[0-9]+\.?[0-9]+").unwrap();
+        if let Some(val) = de_ver_regex.find(&desktop_version_raw) {
+            desktop_version = val.as_str().to_string();
+        }
+    }
+
+
     // Get hardware info
     let cpu = sys.cpus()[0].brand().to_string();
     let memory_in_mb = format!("{}MiB/{}MiB", sys.used_memory() / 1024 / 1024, sys.total_memory() / 1024 / 1024);
@@ -41,7 +68,7 @@ fn main() {
         separator,
         os_name_version,
         kernel,
-        desktop,
+        format!("{} {}", desktop, desktop_version),
         cpu,
         memory_in_mb,
     ];
