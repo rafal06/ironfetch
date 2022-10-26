@@ -1,7 +1,8 @@
+mod ascii_distros;
+use ascii_distros::ASCII_DISTROS;
+
 use std::env;
 use sysinfo::{CpuExt, System, SystemExt};
-
-const ASCII_ART: &str = include_str!("../ascii_distros/fedora.txt");
 
 fn main() {
     let sys = System::new_all();
@@ -45,8 +46,14 @@ fn main() {
         memory_in_mb,
     ];
 
+    // Ascii art
+    let mut distro_logo = sys.distribution_id();
+    if !ASCII_DISTROS.contains_key(&distro_logo) {
+        distro_logo = "linux".to_string();
+    }
+    let ascii_arr: Vec<&str> = ASCII_DISTROS[&distro_logo].split("\n").collect();
+
     // Print everything
-    let ascii_arr: Vec<&str> = ASCII_ART.split("\n").collect();
     for (i, value) in (&printinfo).into_iter().enumerate() {
         println!("{} {}", ascii_arr[i], value);
     }
