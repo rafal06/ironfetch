@@ -26,7 +26,11 @@ fn main() {
         "Darwin" => "MacOS",
         other => other,
     };
-    let os_name_version = format!("{} {}", os_name, sys.os_version().unwrap());
+    let os_version = match sys.os_version() {
+        Some(val) => val,
+        None => String::new(),
+    };
+    let os_name_version = format!("{} {}", os_name, os_version);
     let kernel = sys.kernel_version().unwrap();
     let desktop = match env::var("XDG_CURRENT_DESKTOP") {
         Ok(val) => val,
