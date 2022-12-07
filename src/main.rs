@@ -63,7 +63,9 @@ fn main() {
 
 
     // Get hardware info
-    let cpu = sys.cpus()[0].brand().to_string();
+    let cpu = sys.cpus()[0].brand().to_string()
+        .replace("Intel(R) Core(TM) ", "")
+        .replace("CPU ", "");
     let memory_in_mb = format!("{}MiB/{}MiB", sys.used_memory() / 1024 / 1024, sys.total_memory() / 1024 / 1024);
 
     // Collect everything to a vector
