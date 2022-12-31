@@ -2,6 +2,13 @@
 name = "ironfetch"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+authors = ["Rafał Baran <rafal06@duck.com"]
+description = "A program for displaying system information in a fancy way"
+homepage = "https://github.com/rafal06/ironfetch"
+repository = "https://github.com/rafal06/ironfetch"
+readme = "README.md"
+categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
