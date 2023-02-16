@@ -15,10 +15,7 @@ fn main() {
     let user_at_hostname = format!("{}@{}", username, hostname);
 
     // Generate a separator
-    let mut separator = String::new();
-    for _ in user_at_hostname.chars() {
-        separator.push_str("-")
-    }
+    let separator = "-".repeat(user_at_hostname.len());
 
     // Get system info
     let os_name = sys.name().unwrap();
